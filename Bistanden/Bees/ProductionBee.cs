@@ -34,9 +34,12 @@ namespace Bistanden
                 this.stash = this.TakeNektar();
                 //making honey
                 this.MakeHoney();
+                this.TakeBreak(100, 300);
                 //Stash The Honey
-
+                this.StashHoney();
                 //TakeBreak
+                Console.WriteLine($"{Thread.CurrentThread.Name} Finnished a production");
+                this.TakeBreak();
             }
         }
 
@@ -84,19 +87,16 @@ namespace Bistanden
         /// </summary>
         private void StashHoney()
         {
-            bool finish = false;
-            int result = 0;
-            while (!finish)
+            bool Finish = false;
+            while (!Finish)
             {
+
                 lock (this.home)
                 {
                     try
                     {
-                        result = this.home.TakeNektarFromStash();
-                        if (result > 0)
-                        {
-                            finish = true;
-                        }
+                        this.home.StashTheHoney(this.GiveHoney());
+                        Finish = true;
                     }
                     finally
                     {
@@ -104,6 +104,17 @@ namespace Bistanden
                     }
                 }
             }
+        }
+
+        /// <summary>
+        /// Give the honey from the bee
+        /// </summary>
+        /// <returns>the honey the bee have</returns>
+        private int GiveHoney()
+        {
+            int result = this.honeyStash;
+            this.honeyStash = 0;
+            return result;
         }
     }
 }

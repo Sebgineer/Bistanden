@@ -29,6 +29,15 @@ namespace Bistanden
         }
 
         /// <summary>
+        /// Put Honey in the Stash
+        /// </summary>
+        /// <param name="Honey">the amount of Honey to stash</param>
+        public void StashTheHoney(int Honey)
+        {
+            this.HoneyStash += Honey;
+        }
+
+        /// <summary>
         /// Take up to 3 nektar if possible
         /// </summary>
         /// <returns>returns up to 3</returns>
